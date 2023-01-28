@@ -19,11 +19,11 @@ def predict():
     output = prediction[0]
 
     if output == 0:
-        text = "Green , Play !"
+        text = "It's Green , Play !"
     else:
-        text = "Not Green , Don't Play!"
+        text = "It's Not Green , Don't Play!"
 
-    return render_template('index.html', prediction_text='Next Color Should be {}'.format(text))
+    return render_template('index.html', prediction_text='{}'.format(text))
     
 if __name__ == "__main__":
     app.run(debug=True)
