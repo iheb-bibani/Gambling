@@ -18,9 +18,14 @@ def predict():
     final_features = [np.array(int_features)]
     prediction = model.predict(final_features)
 
-    output = prediction
+    output = prediction[0]
+    
+    if output == 0:
+        text = "It's Green , Play !"
+    else : 
+        text = "It's not Green , Don't Play!"
 
-    return render_template('index.html', prediction_text='Next Color Should be {}'.format(output))
+    return render_template('index.html', prediction_text='Next Color Should be {}'.format(text))
 
 @app.route('/predict_api',methods=['POST'])
 def predict_api():
@@ -28,9 +33,9 @@ def predict_api():
     For direct API calls trought request
     '''
     data = request.get_json(force=True)
-    prediction = model.predict([data.reshape(1,-1)])
+    prediction = model.predict([np.array(list(data.values()))])
 
-    output = prediction
+    output = prediction[0]
     return jsonify(output)
 
 
