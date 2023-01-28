@@ -9,14 +9,21 @@ model = joblib.load('finalized_model.sav')
 def home():
     return render_template('index.html')
 
-@app.route('/predict',methods=['POST'])
-data = request.get_json(force=True)
-    prediction = model.predict([np.array(list(data.values()))])
+def predict():
+    feature_list = request.form.to_dict()
+    feature_list = list(feature_list.values())
+    feature_list = list(map(int, feature_list))
+    final_features = np.array(feature_list).reshape(1, 27)
+    prediction = model.predict(final_features)
 
     output = prediction[0]
-    return jsonify(output)
+
+    if output == 0:
+        text = "Green , Play !"
+    else:
+        text = "Not Green , Don't Play!"
+
+    return render_template('index.html', prediction_text='Next Color Should be {}'.format(text))
     
-
-
 if __name__ == "__main__":
     app.run(debug=True)
