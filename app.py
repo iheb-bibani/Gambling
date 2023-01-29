@@ -2,7 +2,7 @@ import numpy as np
 from flask import Flask, request, jsonify, render_template
 import joblib
 
-app = Flask(__name__,template_folder=templates)
+app = Flask(__name__,template_folder='templates')
 model = joblib.load('finalized_model.sav')
 
 @app.route('/')
