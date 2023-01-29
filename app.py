@@ -10,8 +10,10 @@ def home():
     return render_template('index.html')
 
 def predict():
-    int_features = [int(x) for x in request.form.values()]
-    final_features = [np.array(int_features)]
+    feature_list = request.form.to_dict()
+    feature_list = list(feature_list.values())
+    feature_list = list(map(int, feature_list))
+    final_features = np.array(feature_list).reshape(1, 27)
     prediction = model.predict(final_features)
 
     output = prediction[0]
